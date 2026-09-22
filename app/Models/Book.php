@@ -39,13 +39,13 @@ class Book extends Model
 
     public function scopePopular(Builder $query, $from = null, $to = null): Builder
     {
-        return $query->withReviewsCount()->orderBy('reviews_count', 'desc');
+        return $query->withReviewsCount($from, $to)->orderBy('reviews_count', 'desc');
     }
 
 
     public function scopeHighestRated(Builder $query, $from = null, $to = null): Builder
     {
-        return $query->withAvgRating()->orderBy('reviews_avg_rating', 'desc');
+        return $query->withAvgRating($from, $to)->orderBy('reviews_avg_rating', 'desc');
     }
 
 
@@ -95,7 +95,7 @@ class Book extends Model
     {
         return $query->highestRated(now()->subMonths(6), now())
             ->popular(now()->subMonths(6), now())
-            ->minReviews(5); 
+            ->minReviews(5);
     }
 
 
